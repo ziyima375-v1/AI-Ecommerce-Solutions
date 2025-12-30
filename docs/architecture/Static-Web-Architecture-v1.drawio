@@ -1,0 +1,100 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.9" pages="2">
+  <diagram name="Page-1" id="yDiFdyzy1S-A4kMZCY-V">
+    <mxGraphModel dx="3227" dy="1438" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-6" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;h3&gt;&lt;span&gt;User（全球用户&lt;span style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 12px; font-weight: normal;&quot;&gt;）&lt;/span&gt;&lt;/span&gt;&lt;/h3&gt;" vertex="1">
+          <mxGeometry height="60" width="30" x="-425" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-7" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.route_53;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Route 53&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="40" y="327.1" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-13" edge="1" parent="1" source="s8jnRSjZzRTpIxEqWnlv-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;exitPerimeter=0;" target="s8jnRSjZzRTpIxEqWnlv-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-21" connectable="0" parent="s8jnRSjZzRTpIxEqWnlv-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;color: rgba(0, 0, 0, 0.85); font-family: Inter, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, &amp;quot;PingFang SC&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; text-wrap-mode: wrap; background-color: rgb(255, 255, 255);&quot;&gt;补充缓存资源&lt;/span&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.1594" y="1" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-9" parent="1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudfront;" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;CloudFront 的全球 CDN 节点&lt;/font&gt;" vertex="1">
+          <mxGeometry height="78" width="78" x="370" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-10" parent="1" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;strokeWidth=1;align=center;outlineConnect=0;dashed=0;outlineConnect=0;shape=mxgraph.aws3d.s3Bucket;fillColor=#4286c5;strokeColor=#57A2D8;aspect=fixed;strokeColor2=#292929;" value="&lt;span style=&quot;color: rgba(0, 0, 0, 0.85); font-family: Inter, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, &amp;quot;PingFang SC&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, sans-serif; text-align: start; text-wrap-mode: wrap; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;S3 Bucket（存放 index.html 的源站）&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="63.800000000000004" width="61.5" x="870" y="327.1" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-11" edge="1" parent="1" source="s8jnRSjZzRTpIxEqWnlv-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;" target="s8jnRSjZzRTpIxEqWnlv-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-17" connectable="0" parent="s8jnRSjZzRTpIxEqWnlv-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;输入域名发起请求&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.2595" y="-3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-14" edge="1" parent="1" source="s8jnRSjZzRTpIxEqWnlv-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="s8jnRSjZzRTpIxEqWnlv-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-16" edge="1" parent="1" source="s8jnRSjZzRTpIxEqWnlv-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="s8jnRSjZzRTpIxEqWnlv-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="390" y="190" />
+              <mxPoint x="-410" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-23" connectable="0" parent="s8jnRSjZzRTpIxEqWnlv-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;color: rgba(0, 0, 0, 0.85); font-family: Inter, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, &amp;quot;PingFang SC&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, sans-serif; font-size: 16px; text-align: start; text-wrap-mode: wrap; background-color: rgb(255, 255, 255);&quot;&gt;加速返回资源&lt;/span&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.174" y="-3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-24" parent="1" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.locked;" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14.4px; text-align: left; text-wrap-mode: wrap; background-color: rgba(0, 0, 0, 0.06);&quot;&gt;OAC (Origin Access Control)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="24" x="970" y="327.1" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-25" parent="1" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.certificate;fillColor=#5294CF;gradientColor=none;" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14.4px; text-align: left; text-wrap-mode: wrap; background-color: rgba(0, 0, 0, 0.06);&quot;&gt;ACM Certificate (SSL/HTTPS)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="85.5" width="63" x="440" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-28" edge="1" parent="1" source="s8jnRSjZzRTpIxEqWnlv-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" target="s8jnRSjZzRTpIxEqWnlv-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-29" connectable="0" parent="s8jnRSjZzRTpIxEqWnlv-28" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;返回CloudFront节点地址&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0626" y="-4" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-30" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-426" y="378" />
+              <mxPoint x="-426" y="518" />
+              <mxPoint x="429" y="518" />
+            </Array>
+            <mxPoint x="-425" y="378" as="sourcePoint" />
+            <mxPoint x="428.5" y="396" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-32" connectable="0" parent="s8jnRSjZzRTpIxEqWnlv-30" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;访问CloudFront节点&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.0759" y="-4" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-38" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;用户发起域名访问请求，将请求发送至 Route 53；Route 53 解析该域名，找到距离用户最近的 CloudFront CDN 节点，并把这个节点的地址返回给用户。&lt;br&gt;用户收到地址后，直接访问该 CloudFront CDN 节点（整个 “User→CloudFront→User” 的传输过程，是通过 ACM 证书做了 HTTPS 加密的，保障了数据安全）。&lt;br&gt;若 CloudFront 节点已缓存了用户需要的资源，会直接将加密后的资源回传给用户；若节点无对应缓存，则通过 OAC 权限（只有 CloudFront 能访问 S3，其他人无法直接访问）向 S3 Bucket 拉取资源、补充缓存后，再将加密后的资源回传给用户&lt;/font&gt;" vertex="1">
+          <mxGeometry height="240" width="1170" x="-380" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="s8jnRSjZzRTpIxEqWnlv-39" edge="1" parent="1" source="s8jnRSjZzRTpIxEqWnlv-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="s8jnRSjZzRTpIxEqWnlv-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="CFYntn9CMH1HsQClySEt" name="Page-2">
+    <mxGraphModel dx="1426" dy="863" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

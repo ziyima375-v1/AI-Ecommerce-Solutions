@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ecom Excel Tool（Apple UI）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* ===================== Apple 风格设计系统 ===================== */
+    :root{
+      /* 基础色 */
+      --bg:#f5f5f7;          /* macOS 背景灰 */
+      --panel:#ffffff;
+      --line:#e5e5ea;        /* iOS 分隔线 */
+      --text:#111827;        /* 深黑 */
+      --muted:#6b7280;       /* 次要文字 */
+      --tint:#0071e3;        /* Apple 蓝（按钮/高亮） */
+      --ok:#34c759;
+      --warn:#ff9f0a;
+      --err:#ff3b30;
+
+      /* 质感与圆角 */
+      --radius:14px;
+      --radius-lg:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.8) inset;
+      --ease:cubic-bezier(.2,.7,.25,1);
+      --dur:220ms;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:linear-gradient(180deg,#f9fafb 0%, var(--bg) 100%);
+      color:var(--text);
+      font:14px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",system-ui,Segoe UI,Roboto,Inter,Ubuntu,Helvetica,Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ===================== 布局 ===================== */
+    .app{
+      display:grid; grid-template-columns:270px 1fr; min-height:100vh;
+    }
+
+    /* 侧栏：毛玻璃 */
+    .sidenav{
+      position:sticky; top:0; height:100vh;
+      background:rgba(255,255,255,.72);
+      -webkit-backdrop-filter:saturate(180%) blur(24px);
+      backdrop-filter:saturate(180%) blur(24px);
+      border-right:1px solid var(--line);
+      padding:16px 14px 18px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; margin-bottom:8px;
+    }
+    .logo{
+      width:30px; height:30px; border-radius:9px;
+      background:linear-gradient(135deg,#91caff,#0071e3);
+      box-shadow:0 6px 16px rgba(0,113,227,.25);
+      display:grid; place-items:center; color:#fff; font-weight:700; font-size:12px; letter-spacing:.2px;
+    }
+    .brand h1{margin:0; font-size:16px; font-weight:700; letter-spacing:.2px}
+
+    .navtitle{font-size:12px; color:var(--muted); margin:14px 8px 8px}
+    .navbtn{
+      width:100%; background:transparent; border:1px solid transparent;
+      border-radius:12px; padding:10px 12px; text-align:left; cursor:pointer;
+      display:flex; align-items:center; gap:10px; color:var(--text);
+      transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .navbtn:hover{ background:#f2f2f7 }
+    .navbtn:active{ transform:translateY(1px) }
+    .navbtn.active{
+      background:linear-gradient(180deg,#f6faff 0%, #eef5ff 100%);
+      border-color:#d6e4ff; color:#0b5dde;
+    }
+
+    .hint{font-size:12px; color:var(--muted); margin:8px 8px}
+
+    /* 主区 */
+    .main{ padding:20px 24px; max-width:1200px }
+    .header{ display:flex; align-items:center; gap:10px; margin-bottom:14px }
+    .badge{
+      font-size:12px; color:#0b5dde; background:#eaf2ff;
+      padding:4px 10px; border-radius:999px; border:1px solid #d6e4ff;
+    }
+    .muted{ color:var(--muted) }
+    .mono{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace
+    }
+
+    /* ===================== 卡片与表单 ===================== */
+    .panel{ display:none } .panel.active{ display:block }
+
+    .card{
+      background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+      padding:14px 14px 16px; box-shadow:var(--shadow);
+    }
+    h2{ margin:0 0 8px; font-size:16px; letter-spacing:.2px }
+    .sub{ color:var(--muted); font-size:12px; margin-bottom:10px }
+    .grid{ display:grid; gap:14px }
+    .grid-cols-2{ grid-template-columns:1.1fr 1fr }
+    .row{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:6px 0 }
+    .label{ font-size:12px; color:var(--muted); margin-bottom:6px }
+    .divider{ height:1px; background:var(--line); margin:12px 0 }
+
+    .input, textarea{
+      height:36px; background:#fff; border:1px solid #d1d5db; border-radius:12px;
+      color:var(--text); padding:0 10px; outline:none; width:100%;
+      transition:border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    }
+    textarea{ min-height:110px; padding:10px; resize:vertical }
+    .input:focus, textarea:focus{
+      border-color:var(--tint); box-shadow:0 0 0 3px rgba(0,113,227,.18);
+    }
+
+    .btn{
+      height:36px; padding:0 14px; border-radius:12px;
+      border:1px solid #d1d5db; background:#fff; color:var(--text); cursor:pointer;
+      transition:transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    }
+    .btn:hover{ background:#f2f2f7 }
+    .btn:active{ transform:translateY(1px) }
+    .btn:disabled{ opacity:.6; cursor:not-allowed }
+    .btn-ghost{ background:#fff; border-color:#d1d5db }
+    .btn-primary{
+      color:#fff; border-color:#0b5dde;
+      background:linear-gradient(135deg,#4795ff 0%, #0b5dde 100%);
+      box-shadow:0 6px 16px rgba(11,93,222,.18);
+    }
+    .btn-primary:hover{ filter:brightness(.98) }
+    .btn-green{
+      color:#fff; border-color:#208d55;
+      background:linear-gradient(135deg,#48d87a 0%, #34c759 100%);
+      box-shadow:0 6px 16px rgba(52,199,89,.18);
+    }
+    .right{ display:flex; justify-content:flex-end; gap:8px }
+    .small{ font-size:12px }
+
+    .kpi{ display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 }
+    .kpi .chip{
+      background:#f9fafb; border:1px solid var(--line); border-radius:999px;
+      padding:6px 10px; font-size:12px
+    }
+
+    table{ width:100%; border-collapse:collapse; background:#fff; border-radius:12px; overflow:hidden }
+    th,td{ border-bottom:1px solid var(--line); padding:8px 8px; text-align:left; font-size:12px }
+    th{ color:#374151; font-weight:600; background:#f5f5f7 }
+
+    .log{
+      background:linear-gradient(180deg,#ffffff 0%,#f9fafb 100%);
+      border:1px solid var(--line); border-radius:12px; padding:10px; height:240px; overflow:auto; font-size:12px
+    }
+    .ok{ color:var(--ok) } .warn{ color:var(--warn) } .err{ color:var(--err) }
+
+    /* ===================== 渐变进度条 ===================== */
+    .bar{
+      width:100%; height:10px; border-radius:999px; overflow:hidden;
+      border:1px solid #dbeafe; background:linear-gradient(180deg,#eef2ff,#f8fafc);
+      position:relative;
+    }
+    .bar>div{
+      height:100%; width:0%;
+      background:linear-gradient(90deg,#0b5dde,#5aa0ff,#91caff);
+      background-size:200% 100%;
+      animation:progressFlow 2s linear infinite;
+      transition:width 280ms var(--ease);
+    }
+    .bar.thick{ height:14px }
+    @keyframes progressFlow{
+      0%{ background-position:0% 0 }
+      100%{ background-position:200% 0 }
+    }
+
+    /* ===================== Toast ===================== */
+    .toast{
+      position:fixed; right:16px; bottom:16px; max-width:420px; background:#ffffff;
+      border:1px solid #d1d5db; padding:10px 12px; border-radius:12px; z-index:9999;
+      box-shadow:var(--shadow); font-size:12px; transform:translateY(10px); opacity:0;
+      animation:toastIn var(--dur) var(--ease) forwards;
+    }
+    @keyframes toastIn{ to{ transform:translateY(0); opacity:1 } }
+
+    /* ===================== 自适应 ===================== */
+    @media (max-width:1080px){
+      .app{ grid-template-columns:220px 1fr }
+      .grid-cols-2{ grid-template-columns:1fr }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- ===================== 左侧导航 ===================== -->
+  <aside class="sidenav">
+    <div class="brand">
+      <div class="logo">E</div>
+      <h1>Ecom Excel Tool</h1>
+    </div>
+
+    <div class="navtitle">功能区</div>
+    <button id="tab-batch" class="navbtn active" onclick="switchPanel('batch')">批量模式（默认）</button>
+    <button id="tab-single" class="navbtn" onclick="switchPanel('single')">单文件模式</button>
+
+    <div class="navtitle">当前</div>
+    <div class="hint">
+      文件：<span id="currentFile" class="mono">—</span><br/>
+      状态：<span id="runState" class="muted">待机</span>
+    </div>
+
+    <div class="navtitle">说明</div>
+    <div class="hint">
+      批量：先多选素材 Excel，再多选模板 Excel；可多次追加，按队列串行处理。
+    </div>
+  </aside>
+
+  <!-- ===================== 右侧主区 ===================== -->
+  <main class="main">
+    <div class="header">
+      <span class="badge">Apple 浅色 · 毛玻璃 · 企业级动效</span>
+      <div style="flex:1"></div>
+      <span class="muted small">状态：</span><span id="statusLine" class="small muted">—</span>
+    </div>
+
+    <!-- ========== 批量模式 ========== -->
+    <section id="panel-batch" class="panel active">
+      <div class="card">
+        <h2>批量队列</h2>
+        <div class="sub">两次选择：先多选素材 Excel，再多选模板 Excel；可重复追加形成队列。</div>
+
+        <div class="row">
+          <button class="btn" onclick="selectPairsDialog()">对话框选择两批文件</button>
+          <button class="btn btn-ghost" onclick="clearPairs()">清空队列</button>
+          <div style="flex:1"></div>
+          <input id="batchDefaultSpu" class="input mono" style="max-width:240px" placeholder="批量默认 SPU 起始（可留空）"/>
+          <button class="btn btn-primary" onclick="startBatch()">开始批量</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="label">队列整体进度</div>
+        <div class="bar thick"><div id="barBatch"></div></div>
+
+        <div class="divider"></div>
+
+        <div class="label">队列预览</div>
+        <div style="max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:12px">
+          <table id="pairTable">
+            <thead><tr>
+              <th style="width:44%">素材 Excel</th>
+              <th style="width:44%">模板.xlsx</th>
+              <th>起始SPU</th>
+            </tr></thead>
+            <tbody id="pairBody"><tr><td colspan="3" class="muted">暂无</td></tr></tbody>
+          </table>
+        </div>
+
+        <div class="divider"></div>
+        <div class="label">运行日志</div>
+        <div id="logBox" class="log mono"></div>
+      </div>
+    </section>
+
+    <!-- ========== 单文件模式（上：图生标题；下：生成上架表格） ========== -->
+    <section id="panel-single" class="panel">
+      <!-- 上：图生标题 -->
+      <div class="card">
+        <h2>① 图生标题</h2>
+        <div class="sub">选择一个素材 Excel（需含图片 URL 列），设置提示词与违禁词后生成标题。</div>
+
+        <div class="row">
+          <button class="btn" onclick="pickSourceExcel()">选择素材 Excel</button>
+          <span id="temuInfo" class="muted small">未选择</span>
+        </div>
+
+        <div class="grid grid-cols-2">
+          <div>
+            <div class="label">提示词（用于英文标题）</div>
+            <textarea id="promptBox" placeholder="未设置将使用默认提示词"></textarea>
+            <div class="right" style="margin-top:6px">
+              <button class="btn btn-ghost small" onclick="savePrompt()">保存提示词</button>
+            </div>
+          </div>
+          <div>
+            <div class="label">违禁词（英文，逗号分隔）</div>
+            <textarea id="forbiddenBox" placeholder="nike, disney, ..."></textarea>
+            <div class="right" style="margin-top:6px">
+              <button class="btn btn-ghost small" onclick="saveForbidden()">保存违禁词</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi">
+          <span class="chip">失败剔除：<span id="titleFail" class="mono">0</span> 条</span>
+          <span class="chip">中转表：<span id="bridgePath" class="mono">—</span></span>
+        </div>
+        <div class="bar" title="标题生成进度">
+          <div id="barTitle"></div>
+        </div>
+      </div>
+
+      <!-- 下：生成上架表格 -->
+      <div class="card">
+        <h2>② 生成上架表格</h2>
+        <div class="sub">选择模板.xlsx（需包含“模版”工作表），设置 SPU 起始（可留空自动衔接）。</div>
+
+        <div class="row">
+          <button class="btn" onclick="pickTemplate()">选择模板.xlsx</button>
+          <span id="tplInfo" class="muted small">未选择</span>
+        </div>
+
+        <div class="grid grid-cols-2">
+          <div>
+            <div class="label">SPU 起始号（可留空）</div>
+            <input id="spuStart" class="input mono" placeholder="留空将从上次结束的下一个开始" />
+            <div class="small muted" id="spuHint">下一个起始：—</div>
+          </div>
+          <div>
+            <div class="label">一键开始</div>
+            <button id="btnStartSingle" class="btn btn-green" style="width:100%" onclick="startOneClick()">开始生成（单文件）</button>
+          </div>
+        </div>
+
+        <div class="bar" title="表格生成进度" style="margin-top:8px">
+          <div id="barTable"></div>
+        </div>
+
+        <div class="kpi">
+          <span class="chip">本次写入：<span id="writeInfo" class="mono">—</span></span>
+          <span class="chip">输出文件：<span id="finalPath" class="mono">—</span></span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ===================== 业务脚本 ===================== -->
+<script type="text/javascript" src="/eel.js"></script>
+<script>
+  // ---------- 工具 ----------
+  const $  = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  const basename = p => { try{ return (p||'').split(/[/\\\\]/).pop(); }catch(_){ return p||''; } };
+
+  let phase = 'title';
+  let running = false;
+  let lastTemplatePath = "";
+
+  function setRunState(){ $('#runState').textContent = running ? '运行中' : '待机'; }
+  function setStatus(msg){ $('#statusLine').textContent = msg || '—'; }
+  function setCurrentFile(name){ $('#currentFile').textContent = name || '—'; }
+
+  // ---------- 左侧导航 ----------
+  function switchPanel(which){
+    $$('#tab-batch, #tab-single').forEach(el=>el.classList.remove('active'));
+    $$('#panel-batch, #panel-single').forEach(el=>el.classList.remove('active'));
+    if(which==='batch'){
+      $('#tab-batch').classList.add('active'); $('#panel-batch').classList.add('active');
+    }else{
+      $('#tab-single').classList.add('active'); $('#panel-single').classList.add('active');
+    }
+  }
+
+  // ---------- 进度 ----------
+  function routeProgress(pct){
+    if(pct < 0) pct = 0; if(pct > 100) pct = 100;
+    const bar = (phase === 'title') ? $('#barTitle') : $('#barTable');
+    bar.style.width = pct + '%';
+  }
+  function setBatchProgress(p){ // 0..1 或 0..100
+    let pct = (p<=1)? (p*100) : p;
+    if(pct < 0) pct = 0; if(pct > 100) pct = 100;
+    $('#barBatch').style.width = pct + '%';
+  }
+
+  // ---------- 单文件：选择与开始 ----------
+  async function pickSourceExcel(){
+    const res = await eel.open_file_dialog("temu_excel")();
+    if(!res) return;
+    $('#temuInfo').textContent = basename(res);
+    await eel.select_temu_excel()();
+  }
+  async function pickTemplate(){
+    const res = await eel.open_file_dialog("template_file")();
+    if(!res) return;
+    $('#tplInfo').textContent = basename(res);
+    await eel.select_template_file()();
+  }
+  async function savePrompt(){ await eel.save_prompt(($('#promptBox').value||''))(); }
+  async function saveForbidden(){ await eel.save_forbidden(($('#forbiddenBox').value||''))(); }
+  async function startOneClick(){ await eel.start_oneclick(($('#spuStart').value||'').trim())(); }
+
+  // ---------- 批量 ----------
+  async function selectPairsDialog(){ await eel.select_batch_pairs_dialog()(); }
+  async function clearPairs(){ await eel.clear_batch_pairs()(); }
+  async function startBatch(){
+    setBatchProgress(0);
+    const defaultSpu = ($('#batchDefaultSpu').value || '').trim();
+    await eel.start_oneclick_batch(defaultSpu)();
+  }
+  async function setBatchPairs(pairs){ await eel.set_batch_pairs(pairs||[])(); }
+
+  // ---------- 初始化占位 ----------
+  async function refreshPromptForbidden(){
+    try{
+      const data = await eel.get_prompt_and_forbidden()();
+      if(data){
+        if($('#promptBox').value.trim()==='') $('#promptBox').value = data.prompt || '';
+        if($('#forbiddenBox').value.trim()==='') $('#forbiddenBox').value = (data.forbidden||[]).join(', ');
+        if(data.next_spu_start){
+          $('#spuHint').textContent = '下一个起始：' + data.next_spu_start;
+          $('#spuStart').placeholder = `留空将从 ${data.next_spu_start} 开始`;
+        }
+        if(data.template){
+          lastTemplatePath = data.template || '';
+          $('#tplInfo').textContent = basename(lastTemplatePath);
+        }
+      }
+    }catch(e){}
+  }
+
+  // ---------- 后端回调 ----------
+  eel.expose(update_status);         function update_status(msg){ setStatus(msg); }
+  eel.expose(update_progress);       function update_progress(p){ const pct = (p<=1)? (p*100) : p; routeProgress(pct); }
+  eel.expose(set_phase);             function set_phase(ph){ phase = ph || 'title'; }
+  eel.expose(set_running);           function set_running(flag){ running = !!flag; setRunState(); $('#btnStartSingle').disabled = running; }
+  eel.expose(update_current_file);   function update_current_file(name){ setCurrentFile(name); }
+  eel.expose(update_save_path);      function update_save_path(p){ $('#bridgePath').textContent = p ? basename(p) : '—'; }
+  eel.expose(title_fail_info);       function title_fail_info(n){ $('#titleFail').textContent = String(n||0); }
+  eel.expose(write_info);            function write_info(cnt, rows){ $('#writeInfo').textContent = (cnt!=null?cnt:'—') + ' × 模版行 = ' + (rows!=null?rows:'—'); }
+  eel.expose(update_final_path);     function update_final_path(p){ $('#finalPath').textContent = p ? basename(p) : '—'; }
+  eel.expose(update_next_spu_start); function update_next_spu_start(nxt){ if(!nxt) return; $('#spuHint').textContent = '下一个起始：' + nxt; if(!$('#spuStart').value) $('#spuStart').placeholder = `留空将从 ${nxt} 开始`; }
+  eel.expose(update_prompt_preview); function update_prompt_preview(txt){ /* 预留：需要时可以做预览 */ }
+  eel.expose(update_forbidden_words);function update_forbidden_words(arr){ /* 预留：需要时可以回显 */ }
+
+  // 新增：日志汇总（Backend ExcelToolApp._log 会回调这里）
+  eel.expose(update_logs);
+  function update_logs(items){
+    const box = $('#logBox');
+    if(!Array.isArray(items)){ box.textContent = ''; return; }
+    box.innerHTML = items.map(it=>{
+      const cls = it.type==='error' ? 'err' : (it.type==='warn'?'warn':'ok');
+      const msg = (it.message||'').replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s]));
+      return `<div class="${cls}">» ${msg}</div>`;
+    }).join('');
+    box.scrollTop = box.scrollHeight;
+  }
+
+  // 批量队列快照
+  eel.expose(batch_pairs_snapshot);
+  function batch_pairs_snapshot(pairs){
+    const body = $('#pairBody');
+    if(!pairs || !pairs.length){
+      body.innerHTML = `<tr><td colspan="3" class="muted">暂无</td></tr>`;
+      setBatchProgress(0); return;
+    }
+    body.innerHTML = pairs.map(p=>{
+      const te = (p.temu_excel||'');
+      const tp = (p.template||'');
+      const ss = (p.spu_start||'');
+      return `<tr><td class="mono">${basename(te)}</td><td class="mono">${basename(tp)}</td><td class="mono">${ss||'—'}</td></tr>`
+    }).join('');
+  }
+
+  // 轻提示
+  function toast(text, type){
+    const t = document.createElement('div');
+    t.className = 'toast'; t.innerHTML = text;
+    if(type==='err'){ t.style.borderColor = '#ffd0cc'; t.style.background = '#fff5f5'; }
+    if(type==='warn'){ t.style.borderColor = '#ffe4b5'; t.style.background = '#fffaf0'; }
+    if(type==='ok'){ t.style.borderColor = '#b7f0c0'; t.style.background = '#f2fff2'; }
+    document.body.appendChild(t);
+    setTimeout(()=>{ t.style.opacity=.0; t.style.transform='translateY(10px)'; setTimeout(()=>t.remove(), 220); }, 3200);
+  }
+  eel.expose(show_message); function show_message(title,body){ toast(`${title}：${body}`,'ok'); }
+  eel.expose(show_warning); function show_warning(title,body){ toast(`${title}：${body}`,'warn'); }
+  eel.expose(show_error);   function show_error(msg){ toast(`错误：${msg}`,'err'); }
+
+  // ---------- 启动 ----------
+  (async function init(){
+    setRunState();
+    switchPanel('batch');
+    await refreshPromptForbidden();
+  })();
+</script>
+</body>
+</html>
